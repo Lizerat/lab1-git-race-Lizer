@@ -19,7 +19,15 @@ class HelloController(
         model: Model,
         @RequestParam(defaultValue = "") name: String
     ): String {
-        val greeting = if (name.isNotBlank()) "Hello, $name!" else message
+        val tiempo = java.time.Instant.now().toString()
+        val hora = tiempo.split("T")[1].split(":")[0].toInt()
+        val momentoDelDia = when(hora) {
+            in 6..14 -> "Good morning"
+            in 15..21 -> "Good afternoon"
+            in 21..23, in 0..5 -> "Good night"
+            else -> "Hello"
+        }
+        val greeting = if (name.isNotBlank()) "$momentoDelDia, $name!" else message
         model.addAttribute("message", greeting)
         model.addAttribute("name", name)
         return "welcome"
@@ -28,11 +36,18 @@ class HelloController(
 
 @RestController
 class HelloApiController {
-    
+    val tiempo = java.time.Instant.now().toString()
+    val hora = tiempo.split("T")[1].split(":")[0].toInt()
+    val momentoDelDia = when(hora) {
+        in 6..14 -> "Good morning"
+        in 15..21 -> "Good afternoon"
+        in 21..23, in 0..5 -> "Good night"
+        else -> "Hello"
+    }
     @GetMapping("/api/hello", produces = [MediaType.APPLICATION_JSON_VALUE])
     fun helloApi(@RequestParam(defaultValue = "World") name: String): Map<String, String> {
         return mapOf(
-            "message" to "Hello, $name!",
+            "message" to "$momentoDelDia, $name!",
             "timestamp" to java.time.Instant.now().toString()
         )
     }
