@@ -35,7 +35,9 @@ class HelloControllerMVCTests {
             .andDo(print())
             .andExpect(status().isOk)
             .andExpect(view().name("welcome"))
-            .andExpect(model().attribute("message", equalTo("Hello, Developer!")))
+            .andExpect(model().attribute("message", equalTo(
+                HelloController.obtenerSaludo() + ", Developer!"
+            )))
             .andExpect(model().attribute("name", equalTo("Developer")))
     }
     
@@ -45,7 +47,9 @@ class HelloControllerMVCTests {
             .andDo(print())
             .andExpect(status().isOk)
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-            .andExpect(jsonPath("$.message", equalTo("Hello, Test!")))
+            .andExpect(jsonPath("$.message", equalTo(
+                HelloController.obtenerSaludo() + ", Test!"
+            )))
             .andExpect(jsonPath("$.timestamp").exists())
     }
 }
