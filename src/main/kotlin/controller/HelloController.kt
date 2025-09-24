@@ -17,8 +17,6 @@ class HelloController(
 ) {
     /**
      * Esta función permite obtener un saludo personalizado según la hora.
-     * Nótese que los rangos y las opciones están ajustadas a la cultura española, por lo que otros rangos y o mas o
-     * menos opciones podrían ser relevantes de cara a la localización del método a otras culturas.
      */
     companion object {
         fun obtenerSaludo(): String {

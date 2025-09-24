@@ -1,5 +1,6 @@
 package es.unizar.webeng.hello
 
+import es.unizar.webeng.hello.controller.HelloController
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -34,7 +35,7 @@ class IntegrationTest {
         val response = restTemplate.getForEntity("http://localhost:$port?name=Developer", String::class.java)
         
         assertThat(response.statusCode).isEqualTo(HttpStatus.OK)
-        assertThat(response.body).contains("Hello, Developer!")
+        assertThat(response.body).contains(HelloController.obtenerSaludo() + ", Developer!")
     }
 
     @Test
@@ -43,7 +44,7 @@ class IntegrationTest {
         
         assertThat(response.statusCode).isEqualTo(HttpStatus.OK)
         assertThat(response.headers.contentType).isEqualTo(MediaType.APPLICATION_JSON)
-        assertThat(response.body).contains("Hello, Test!")
+        assertThat(response.body).contains(HelloController.obtenerSaludo() + ", Test!")
         assertThat(response.body).contains("timestamp")
     }
 
