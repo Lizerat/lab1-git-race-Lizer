@@ -45,11 +45,30 @@ class HelloController(
     }
 }
 
+/**
+ * REST controller that handles API requests for greeting messages.
+ *
+ * This controller provides an endpoint to generate and save a greeting message,
+ * and returns the greeting along with a timestamp in JSON format.
+ *
+ * @property greetingService Service responsible for managing greeting records.
+ */
 @RestController
 class HelloApiController (
     private val greetingService: GreetingService
 ) {
 
+    /**
+     * Handles GET requests to `/api/hello` and returns a greeting message.
+     *
+     * Generates a greeting based on the current time of day, saves it to the database,
+     * and returns a JSON object containing the greeting message and the current timestamp.
+     *
+     * @param name The name to include in the greeting. Defaults to `"World"` if not provided.
+     * @return A map containing:
+     *   - `"message"`: the generated greeting message including the provided name.
+     *   - `"timestamp"`: the current timestamp.
+     */
     @GetMapping("/api/hello", produces = [MediaType.APPLICATION_JSON_VALUE])
     fun helloApi(@RequestParam(defaultValue = "World") name: String): Map<String, String> {
         val timestamp = java.time.Instant.now().toString()
