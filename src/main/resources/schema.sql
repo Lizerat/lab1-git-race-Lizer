@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS greetings (
+    id VARCHAR(60) PRIMARY KEY,
+    greeting VARCHAR NOT NULL,
+    name VARCHAR NOT NULL,
+    timestamp VARCHAR NOT NULL
+);

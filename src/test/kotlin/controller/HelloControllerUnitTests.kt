@@ -1,8 +1,12 @@
 package es.unizar.webeng.hello.controller
 
+import es.unizar.webeng.hello.GreetingService
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.mockito.Mockito.mock
+import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest
+import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.ui.Model
 import org.springframework.ui.ExtendedModelMap
 
@@ -38,7 +42,8 @@ class HelloControllerUnitTests {
     
     @Test
     fun `should return API response with timestamp`() {
-        val apiController = HelloApiController()
+        val greetingService = mock(GreetingService::class.java)
+        val apiController = HelloApiController(greetingService)
         val response = apiController.helloApi("Test")
         
         assertThat(response).containsKey("message")

@@ -2,6 +2,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const testWebBtn = document.getElementById('testWebBtn');
     const testApiBtn = document.getElementById('testApiBtn');
+    const historyBtn = document.getElementById('historyBtn');
     const testHealthBtn = document.getElementById('testHealthBtn');
     const openDevToolsBtn = document.getElementById('openDevToolsBtn');
     const requestInfo = document.getElementById('requestInfo');
@@ -164,7 +165,13 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }, 3000);
     }
-    
+
+    // Test /history endpoint
+
+    historyBtn.addEventListener('click', async function() {
+        window.location.href = "/history";
+    });
+
     // Test health endpoint
     testHealthBtn.addEventListener('click', async function() {
         const url = '/actuator/health';
