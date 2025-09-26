@@ -1,6 +1,6 @@
 package es.unizar.webeng.hello.controller
 
-import es.unizar.webeng.hello.controller.HelloController.Companion.obtenerSaludo
+import es.unizar.webeng.hello.controller.HelloController.Companion.greeting
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Controller
@@ -16,10 +16,10 @@ class HelloController(
     private val message: String
 ) {
     /**
-     * Esta función permite obtener un saludo personalizado según la hora.
+     * This method changes the greeting based on the local hour.
      */
     companion object {
-        fun obtenerSaludo(): String {
+        fun greeting(): String {
             val hora = java.time.LocalTime.now(ZoneId.systemDefault()).hour
             return when(hora) {
                 in 6..14 -> "Good morning"
@@ -35,7 +35,7 @@ class HelloController(
         model: Model,
         @RequestParam(defaultValue = "") name: String
     ): String {
-        val momentoDelDia = obtenerSaludo()
+        val momentoDelDia = greeting()
         val greeting = if (name.isNotBlank()) "$momentoDelDia, $name!" else message
         model.addAttribute("message", greeting)
         model.addAttribute("name", name)
@@ -47,7 +47,7 @@ class HelloController(
 class HelloApiController {
     @GetMapping("/api/hello", produces = [MediaType.APPLICATION_JSON_VALUE])
     fun helloApi(@RequestParam(defaultValue = "World") name: String): Map<String, String> {
-        val momentoDelDia = obtenerSaludo()
+        val momentoDelDia = greeting()
         return mapOf(
             "message" to "$momentoDelDia, $name!",
             "timestamp" to java.time.Instant.now().toString()

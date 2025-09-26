@@ -31,7 +31,7 @@ class HelloControllerUnitTests {
         
         assertThat(view).isEqualTo("welcome")
         assertThat(model.getAttribute("message")).isEqualTo(
-            HelloController.obtenerSaludo() + ", Developer!"
+            HelloController.greeting() + ", Developer!"
         )
         assertThat(model.getAttribute("name")).isEqualTo("Developer")
     }
@@ -43,7 +43,7 @@ class HelloControllerUnitTests {
         
         assertThat(response).containsKey("message")
         assertThat(response).containsKey("timestamp")
-        assertThat(response["message"]).isEqualTo(HelloController.obtenerSaludo() + ", Test!")
+        assertThat(response["message"]).isEqualTo(HelloController.greeting() + ", Test!")
         assertThat(response["timestamp"]).isNotNull()
     }
 }
