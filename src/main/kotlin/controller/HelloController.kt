@@ -5,7 +5,6 @@ import es.unizar.webeng.hello.GreetingService
 import es.unizar.webeng.hello.controller.HelloController.Companion.greeting
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.MediaType
-import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
@@ -56,7 +55,7 @@ class HelloApiController (
         val timestamp = java.time.Instant.now().toString()
         val hourGreeting = greeting()
         val greeting = Greeting(
-            id = null, // se generará UUID en el servicio
+            id = null,
             greeting = hourGreeting,
             name = name,
             timestamp = timestamp
