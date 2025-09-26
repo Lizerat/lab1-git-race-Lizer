@@ -27,6 +27,9 @@ dependencies {
     implementation(libs.bootstrap)
     implementation(libs.jackson.module.kotlin)
     testImplementation(libs.spring.boot.starter.test)
+
+    implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
+    runtimeOnly("com.h2database:h2")
 }
 
 tasks.withType<Test> {

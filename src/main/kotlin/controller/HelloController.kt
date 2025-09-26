@@ -1,8 +1,11 @@
 package es.unizar.webeng.hello.controller
 
+import es.unizar.webeng.hello.Greeting
+import es.unizar.webeng.hello.GreetingService
 import es.unizar.webeng.hello.controller.HelloController.Companion.greeting
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.MediaType
+import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
@@ -35,8 +38,8 @@ class HelloController(
         model: Model,
         @RequestParam(defaultValue = "") name: String
     ): String {
-        val momentoDelDia = greeting()
-        val greeting = if (name.isNotBlank()) "$momentoDelDia, $name!" else message
+        val hourGreeting = greeting()
+        val greeting = if (name.isNotBlank()) "$hourGreeting, $name!" else message
         model.addAttribute("message", greeting)
         model.addAttribute("name", name)
         return "welcome"
@@ -44,13 +47,24 @@ class HelloController(
 }
 
 @RestController
-class HelloApiController {
+class HelloApiController (
+    private val greetingService: GreetingService
+) {
+
     @GetMapping("/api/hello", produces = [MediaType.APPLICATION_JSON_VALUE])
     fun helloApi(@RequestParam(defaultValue = "World") name: String): Map<String, String> {
-        val momentoDelDia = greeting()
+        val timestamp = java.time.Instant.now().toString()
+        val hourGreeting = greeting()
+        val greeting = Greeting(
+            id = null, // se generará UUID en el servicio
+            greeting = hourGreeting,
+            name = name,
+            timestamp = timestamp
+        )
+        greetingService.save(greeting)
         return mapOf(
-            "message" to "$momentoDelDia, $name!",
-            "timestamp" to java.time.Instant.now().toString()
+            "message" to "$hourGreeting, $name!",
+            "timestamp" to timestamp
         )
     }
 }
